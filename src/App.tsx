@@ -5,7 +5,7 @@ import TerminalView from "./components/TerminalView";
 import SftpView from "./components/SftpView";
 import PassphrasePrompt from "./components/PassphrasePrompt";
 import OSIcon from "./components/OSIcon";
-import { X, Server, Eye, EyeOff, Loader2, ChevronDown } from "lucide-react";
+import { X, Server, Eye, EyeOff, Loader2, ChevronDown, PanelLeftOpen } from "lucide-react";
 import { open, ask, message } from "@tauri-apps/plugin-dialog";
 
 function detectOsFromOutput(output: string): string {
@@ -50,6 +50,7 @@ interface ActiveSession {
 
 export default function App() {
   const [hosts, setHosts] = useState<Host[]>([]);
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
   const [activeSessions, setActiveSessions] = useState<ActiveSession[]>([]);
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
 
@@ -302,13 +303,24 @@ export default function App() {
         onAddHost={openAddModal}
         onEditHost={openEditModal}
         onDeleteHost={handleDeleteHost}
+        collapsed={!sidebarOpen}
+        onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
       />
 
       {/* Main Canvas Workspace */}
       <main className="flex-1 flex flex-col h-full overflow-hidden bg-[#12131a]/40">
         
         {/* Title bar / Tab bar */}
-        <div className="h-12 border-b border-white/5 bg-black/20 flex items-center px-4 overflow-x-auto select-none drag scrollbar-none gap-2">
+        <div className={`h-12 border-b border-white/5 bg-black/20 flex items-center px-4 overflow-x-auto select-none drag scrollbar-none gap-2 transition-all duration-300 ${!sidebarOpen ? "pl-20" : ""}`}>
+          {!sidebarOpen && (
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="mr-1 p-1.5 hover:bg-white/10 rounded-lg transition-colors text-white/70 hover:text-white flex-shrink-0 cursor-pointer"
+              title="Expand Sidebar"
+            >
+              <PanelLeftOpen size={16} />
+            </button>
+          )}
           {activeSessions.length === 0 ? (
             <div className="text-xs text-white/30 font-medium pl-4 py-3">No active sessions. Connect to a server from the sidebar.</div>
           ) : (
@@ -360,6 +372,7 @@ export default function App() {
               {session.type === "terminal" ? (
                 <TerminalView
                   sessionId={session.id}
+                  active={activeSessionId === session.id}
                   onClose={() => handleDisconnect(session.id)}
                 />
               ) : (

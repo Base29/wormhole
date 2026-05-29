@@ -37,6 +37,7 @@ const draculaTheme = {
 
 interface TerminalViewProps {
   sessionId: string;
+  active?: boolean;
   onClose?: () => void;
 }
 
@@ -277,7 +278,7 @@ function formatFreeToAnsi(raw: string): string {
   }
 }
 
-export default function TerminalView({ sessionId, onClose }: TerminalViewProps) {
+export default function TerminalView({ sessionId, active, onClose }: TerminalViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const terminalInstance = useRef<Terminal | null>(null);
   const fitAddonInstance = useRef<FitAddon | null>(null);
@@ -299,6 +300,13 @@ export default function TerminalView({ sessionId, onClose }: TerminalViewProps) 
   const [memoryUsage, setMemoryUsage] = useState<MemoryInfo | null>(null);
   const [services, setServices] = useState<ServiceInfo[]>([]);
   const [processes, setProcesses] = useState<ProcessInfo[]>([]);
+
+  // Focus terminal when it becomes active (e.g. on tab switch)
+  useEffect(() => {
+    if (active && terminalInstance.current) {
+      terminalInstance.current.focus();
+    }
+  }, [active]);
 
   // --- Filter & Search States ---
   const [dockerSearch, setDockerSearch] = useState<string>("");
@@ -616,6 +624,10 @@ export default function TerminalView({ sessionId, onClose }: TerminalViewProps) 
 
     terminalInstance.current = term;
     fitAddonInstance.current = fitAddon;
+
+    if (active) {
+      term.focus();
+    }
 
     // Send initial size resize command to backend
     const dims = fitAddon.proposeDimensions();
