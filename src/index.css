@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color-scheme: dark;
+  --bg-app: rgba(15, 17, 26, 0.5);
+  --bg-sidebar: rgba(22, 24, 37, 0.6);
+  --bg-card: rgba(30, 34, 51, 0.4);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --text-primary: #f8f8f2;
+  --text-secondary: #a0a6b9;
+  
+  /* Dracula Palette */
+  --dracula-background: #282a36;
+  --dracula-current-line: #44475a;
+  --dracula-foreground: #f8f8f2;
+  --dracula-comment: #6272a4;
+  --dracula-cyan: #8be9fd;
+  --dracula-green: #50fa7b;
+  --dracula-orange: #ffb86c;
+  --dracula-pink: #ff79c6;
+  --dracula-purple: #bd93f9;
+  --dracula-red: #ff5555;
+  --dracula-yellow: #f1fa8c;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--text-primary);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* Glassmorphism effects */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border: 1px solid var(--border-glass);
+}
+
+.glass-sidebar {
+  background: var(--bg-sidebar);
+  backdrop-filter: blur(35px) saturate(200%);
+  -webkit-backdrop-filter: blur(35px) saturate(200%);
+  border-right: 1px solid var(--border-glass);
+}
+
+.glass-titlebar {
+  background: rgba(10, 11, 18, 0.2);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-bottom: 1px solid var(--border-glass);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Xterm.js customized layout */
+.xterm {
+  padding: 12px;
+  height: 100%;
+}
+
+.xterm-viewport {
+  background-color: var(--dracula-background) !important;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+
+/* Drag-and-drop overlay style */
+.drag-over {
+  border: 2px dashed var(--dracula-purple);
+  background: rgba(189, 147, 249, 0.15) !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
