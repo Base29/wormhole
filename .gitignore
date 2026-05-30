@@ -77,3 +77,4 @@ desktop.ini
 .sublime-project
 .sublime-workspace
 ./.vscode
+*.vscode*
