@@ -389,7 +389,10 @@ export default function App() {
               <div className="p-4 bg-purple-500/5 border border-purple-500/10 rounded-2xl text-purple-400 mb-4 shadow shadow-purple-500/5">
                 <Server size={36} className="animate-pulse" />
               </div>
-              <h2 className="text-lg font-bold text-white mb-2">Welcome to Wormhole</h2>
+              <h2 className="text-lg font-bold text-white mb-1">Welcome to Wormhole</h2>
+              <span className="inline-flex items-center px-2.5 py-0.5 mb-4 text-[10px] font-semibold text-purple-400/90 bg-purple-500/10 border border-purple-500/20 rounded-full select-none">
+                v0.1.0
+              </span>
               <p className="text-xs text-white/40 max-w-sm leading-relaxed">
                 Connect to a saved server from the sidebar or click <strong className="text-purple-400 cursor-pointer hover:underline" onClick={openAddModal}>"+"</strong> to register a new remote SSH credentials vault.
               </p>
